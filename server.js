@@ -2,6 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const Groq = require('groq-sdk');
+const fs = require('fs');
+const path = require('path');
 
 const app = express();
 app.use(express.json());
@@ -9,27 +11,25 @@ app.use(cors());
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
-// Mantendo seu System Instruction aprimorado
-const SYSTEM_INSTRUCTION = `Você é o 'Especialista MSEP SC'. Sua missão é criar itens de avaliação objetiva (múltipla escolha) seguindo rigorosamente a Metodologia SENAI de Educação Profissional.
+// Função para ler os exemplos do arquivo JSON
+function carregarExemplos() {
+    try {
+        const data = fs.readFileSync(path.join(__dirname, 'questoes_exemplo.json'), 'utf8');
+        return JSON.parse(data);
+    } catch (err) {
+        console.error("Erro ao carregar questoes_exemplo.json:", err);
+        return [];
+    }
+}
 
-DIRETRIZES TÉCNICAS:
-1. CONTEXTO: Deve iniciar com "Em uma indústria de... na área de...". O estudante deve ser tratado como o profissional (Técnico). O contexto deve apresentar um problema factível e relevante da rotina industrial. Máximo 1 parágrafo.
-2. COMANDO: Pergunta direta, clara e impessoal. 
-   - PROIBIDO: "Assinale a correta", "Exceto", "Não", "Incorreto", "Sempre", "Nunca".
-   - O comando deve ser suficiente para que o aluno entenda o problema antes de ler as alternativas.
-3. TAXONOMIA DE BLOOM: O verbo do comando e a complexidade do item DEVEM ser coerentes com o nível cognitivo da capacidade avaliada (ou forçados conforme instrução de raciocínio).
-4. ALTERNATIVAS (A, B, C, D):
-   - GABARITO: Única resposta correta, sem atrativos óbvios.
-   - DISTRATORES: Devem ser plausíveis (erros que um aluno que ainda não domina a capacidade cometeria). Não use "pegadinhas".
-5. JUSTIFICATIVA: Para cada distrator, explique a hipótese de raciocínio do estudante (ex: "O aluno confundiu o conceito X com Y").
+// INSTRUÇÃO DO SISTEMA - Definição da "Personalidade" e Regras MSEP
+const SYSTEM_INSTRUCTION = `Você é o 'Especialista MSEP SC'. Sua missão é criar itens de avaliação profissional seguindo a Metodologia SENAI.
 
-NÍVEIS COGNITIVOS (Referência):
-- Lembrar (Identificar, Listar)
-- Entender (Descrever, Explicar)
-- Aplicar (Executar, Medir)
-- Analisar (Diferenciar, Testar, Inspecionar)
-- Avaliar (Validar, Julgar)
-- Criar (Projetar, Elaborar)`;
+REGRAS DE OURO:
+1. CONTEXTO PROFISSIONAL: O item deve começar com "Em uma indústria de... na área de...". O estudante é um TÉCNICO resolvendo um problema real.
+2. COMANDO LIMPO: Proibido usar "exceto", "incorreto", "não", "assinale a alternativa". O comando deve ser uma pergunta direta que pode ser respondida sem ler as alternativas.
+3. DISTRATORES HOMOGÊNEOS: Se a resposta é um componente, todos os distratores devem ser componentes da mesma família. Se é um cálculo, todos devem ser resultados de erros lógicos de cálculo.
+4. JUSTIFICATIVA PEDAGÓGICA: Deve ser um texto único (string) explicando por que a correta está certa e qual foi o erro de raciocínio técnico em cada distrator.`;
 
 async function chamarIA(messages) {
     const completion = await groq.chat.completions.create({
@@ -43,43 +43,48 @@ async function chamarIA(messages) {
 
 app.post('/gerar-questao', async (req, res) => {
     const { capacidade, dificil, contextoAulas, distratoresDificeis } = req.body;
+    const exemplos = carregarExemplos();
 
-    // Passo 1: Prompt de Raciocínio (Mantendo o seu e integrando contexto de aula)
+    // PASSO 1: ANÁLISE TÉCNICA E PEDAGÓGICA (Raciocínio)
     const promptRaciocinio = [
-      { role: "system", content: SYSTEM_INSTRUCTION },
-      { role: "user", content: `Analise tecnicamente a capacidade: "${capacidade}". 
-      ${contextoAulas ? `CONTEXTO ADICIONAL DA AULA: "${contextoAulas}"` : ""}
-
-      TAREFAS:
-      1. Identifique o verbo principal e o nível original na Taxonomia de Bloom.
-      2. Defina o Objeto de Conhecimento central, priorizando o que foi trabalhado em aula se houver contexto.
-      3. SE ${dificil} (Modo Difícil): Force o nível 'ANALISAR'. O item deve focar em diagnóstico de falha ou análise de causa/efeito.
-      4. SE NÃO: Siga o nível original da capacidade.
-
-      Retorne JSON: {
-          "verbo_identificado": "...",
-          "nivel_cognitivo": "...",
-          "complexidade": "${dificil ? 'Alta (Diagnóstico)' : 'Padrão'}",
-          "estrategia_didatica": "Explique como o contexto industrial e os temas da aula serão unidos"
-      }` }
+        { role: "system", content: SYSTEM_INSTRUCTION },
+        { role: "user", content: `Analise a capacidade: "${capacidade}".
+        
+        TAREFAS:
+        1. Identifique o Verbo e o Nível Bloom Original.
+        2. Se o modo difícil estiver ativo (${dificil}), eleve obrigatoriamente para 'ANALISAR'.
+        3. Planeje a "Estratégia do Erro": Que tipo de falha técnica comum um aluno cometeria aqui?
+        
+        Retorne JSON: {
+            "verbo": "...",
+            "nivel_bloom": "...",
+            "objeto_conhecimento": "...",
+            "estrategia_distratores": "Descreva como os erros serão construídos para serem plausíveis"
+        }` }
     ];
 
     try {
         const analise = await chamarIA(promptRaciocinio);
 
-        // Passo 2: Geração da Questão Final com a nova regra de distratores
+        // PASSO 2: GERAÇÃO DA QUESTÃO (Aplicação do Few-Shot com os exemplos do JSON)
         const promptQuestao = [
             { role: "system", content: SYSTEM_INSTRUCTION },
-            { role: "user", content: `Com base nesta análise: ${JSON.stringify(analise)}, crie uma questão para: "${capacidade}".
-            
-            REGRAS ADICIONAIS:
-            ${distratoresDificeis ? "- DISTRATORES DIFÍCEIS: Os distratores devem ser da mesma categoria técnica da resposta. Ex: Se o gabarito é um comando UPDATE, use outros comandos de alteração/sintaxe parecida como distratores. Evite misturar verbos SQL totalmente diferentes (SELECT/DELETE)." : ""}
-            - AUTO-CONTENÇÃO: A questão deve ser completa. NÃO mencione "conforme visto em aula" ou "com base na explicação do professor". 
-            - FOCO EM AULA: Se foi fornecido contexto de aula, use os exemplos técnicos de lá para compor a Situação-Problema.
+            { role: "user", content: `Use estes exemplos como padrão de qualidade:
+            ${JSON.stringify(exemplos)}
+
+            Agora, gere uma questão inédita:
+            - Capacidade: "${capacidade}"
+            - Nível Cognitivo: ${analise.nivel_bloom}
+            - Verbo: ${analise.verbo}
+            - Contexto Adicional (Aula): ${contextoAulas || "Não fornecido"}
+            - Distratores de Alta Dificuldade: ${distratoresDificeis ? "SIM" : "NÃO"}
+            - Estratégia de Erro: ${analise.estrategia_distratores}
+
+            REQUISITO DE SAÍDA: O campo 'justificativa' deve ser apenas TEXTO (string). Não use objetos ou listas dentro dele.
 
             Retorne JSON: {
-                "verbo_aplicado": "${analise.verbo_identificado}",
-                "nivel": "${analise.nivel_cognitivo}",
+                "verbo_aplicado": "...",
+                "nivel": "...",
                 "contexto": "...",
                 "enunciado": "...",
                 "alternativas": {"a": "...", "b": "...", "c": "...", "d": "..."},
@@ -90,10 +95,12 @@ app.post('/gerar-questao', async (req, res) => {
 
         const questao = await chamarIA(promptQuestao);
         res.json(questao);
+
     } catch (e) {
-        console.error(e);
-        res.status(500).json({ error: e.message });
+        console.error("Erro no processamento:", e);
+        res.status(500).json({ error: "Falha ao gerar questão técnica." });
     }
 });
 
-app.listen(3000, () => console.log('🚀 Sistema MSEP SC rodando no Groq!'));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`🚀 Agente MSEP SC rodando na porta ${PORT}`));

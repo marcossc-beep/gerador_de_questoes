@@ -1,0 +1,512 @@
+[
+    {
+        "UC": "Banco de dados",
+        "QUESTOES": {
+            "Distinguir arquitetura de banco de dados de acordo com aplicação.": [
+  {
+    "capacidade": "Distinguir arquitetura de banco de dados de acordo com aplicação.",
+    "verbo": "Distinguir",
+    "nivel_bloom": "Analisar",
+    "distratores_dificeis": true,
+    "exemplo": {
+      "contexto": "Em uma indústria farmacêutica na área de Pesquisa e Desenvolvimento (P&D), um técnico deve selecionar a infraestrutura para armazenar trilhões de registros de sensores de temperatura que geram dados não estruturados em alta velocidade.",
+      "enunciado": "Qual arquitetura de banco de dados é a mais adequada para garantir a escalabilidade horizontal e a flexibilidade de esquema exigida por este volume de dados?",
+      "alternativas": {
+        "a": "Arquitetura NoSQL (Orientada a Documentos ou Chave-Valor).",
+        "b": "Arquitetura Relacional (SQL) com normalização em terceira forma normal.",
+        "c": "Arquitetura Hierárquica baseada em sistemas de arquivos legados.",
+        "d": "Arquitetura Centralizada baseada em arquivos de texto plano (CSV)."
+      },
+      "correta": "a",
+      "justificativa": "A alternativa 'a' é a correta pois bancos NoSQL são projetados para escalabilidade horizontal e dados sem esquema fixo, ideais para Big Data e sensores. A 'b' teria dificuldades de performance e custo para escalar horizontalmente nesse volume. A 'c' e 'd' não suportam as necessidades de busca e integridade modernas."
+    }
+  },
+  {
+    "capacidade": "Distinguir arquitetura de banco de dados de acordo com aplicação.",
+    "verbo": "Distinguir",
+    "nivel_bloom": "Entender",
+    "distratores_dificeis": true,
+    "exemplo": {
+      "contexto": "Em uma indústria automotiva na área de gestão de estoque e finanças, o sistema precisa garantir que uma transação de compra de peças seja concluída integralmente ou cancelada em caso de falha, mantendo a integridade total dos dados.",
+      "enunciado": "Qual tipo de arquitetura de banco de dados provê nativamente o suporte às propriedades ACID (Atomicidade, Consistência, Isolamento e Durabilidade) para este cenário?",
+      "alternativas": {
+        "a": "Arquitetura Relacional (RDBMS).",
+        "b": "Arquitetura NoSQL Orientada a Grafos.",
+        "c": "Arquitetura de Processamento em Lote (Batch Processing).",
+        "d": "Arquitetura de Banco de Dados em Memória sem persistência."
+      },
+      "correta": "a",
+      "justificativa": "A alternativa 'a' é a correta pois bancos relacionais (SQL) são fundamentados no rigor das propriedades ACID para garantir transações seguras. As demais arquiteturas (b, c, d) priorizam outros aspectos como performance de rede ou volume, sacrificando parte da consistência imediata ou durabilidade."
+    }
+  },
+  {
+    "capacidade": "Distinguir arquitetura de banco de dados de acordo com aplicação.",
+    "verbo": "Diferenciar",
+    "nivel_bloom": "Analisar",
+    "distratores_dificeis": true,
+    "exemplo": {
+      "contexto": "Em uma indústria metalúrgica na área de Business Intelligence (BI), a equipe técnica precisa separar os dados usados na operação diária da fábrica dos dados usados para gerar relatórios anuais de desempenho e tendências.",
+      "enunciado": "Qual característica técnica diferencia a arquitetura de um Data Warehouse da arquitetura de um banco de dados OLTP (Online Transaction Processing)?",
+      "alternativas": {
+        "a": "Otimização para consultas complexas e análise de grandes massas de dados históricos.",
+        "b": "Frequência extremamente alta de pequenas operações de inserção e atualização de dados.",
+        "c": "Uso obrigatório de normalização para reduzir ao máximo a redundância de informações.",
+        "d": "Armazenamento exclusivo de dados voláteis que são apagados após o fim do turno."
+      },
+      "correta": "a",
+      "justificativa": "A alternativa 'a' identifica a função principal do Data Warehouse. A 'b' e 'c' são características típicas de sistemas OLTP (bancos operacionais). A 'd' descreve um comportamento que não se aplica a nenhuma das duas arquiteturas de armazenamento persistente."
+    }
+  },
+  {
+    "capacidade": "Distinguir arquitetura de banco de dados de acordo com aplicação.",
+    "verbo": "Analisar",
+    "nivel_bloom": "Analisar",
+    "distratores_dificeis": true,
+    "exemplo": {
+      "contexto": "Em uma indústria têxtil com unidades em diferentes cidades, o técnico analisa a lentidão do sistema e descobre que todas as lojas tentam gravar dados simultaneamente em um único servidor central em outra região.",
+      "enunciado": "Qual alteração na arquitetura do banco de dados resolve o problema de latência e dependência de um único ponto de falha?",
+      "alternativas": {
+        "a": "Implementação de uma arquitetura de Banco de Dados Distribuído.",
+        "b": "Migração para um banco de dados centralizado com maior capacidade de disco rígido.",
+        "c": "Troca do banco de dados relacional por uma planilha compartilhada na nuvem.",
+        "d": "Criação de índices simples nas tabelas do servidor central existente."
+      },
+      "correta": "a",
+      "justificativa": "A alternativa 'a' é a correta pois a distribuição dos dados aproxima a informação do usuário e elimina o ponto único de falha. A 'b' e 'd' não resolvem o problema de latência de rede ou disponibilidade geográfica. A 'c' é um erro técnico grave para ambientes industriais."
+    }
+  },
+  {
+    "capacidade": "Distinguir arquitetura de banco de dados de acordo com aplicação.",
+    "verbo": "Inspecionar",
+    "nivel_bloom": "Analisar",
+    "distratores_dificeis": true,
+    "exemplo": {
+      "contexto": "Em uma indústria de alimentos na área de rastreabilidade, um técnico inspeciona o diagrama de um banco de dados e nota que as relações entre fornecedores, ingredientes e lotes de produtos formam uma rede complexa de muitos para muitos.",
+      "enunciado": "Ao analisar a complexidade dessas conexões, qual arquitetura de banco de dados oferece melhor performance para realizar consultas de 'caminho' ou 'vizinhança' entre esses dados?",
+      "alternativas": {
+        "a": "Arquitetura NoSQL Orientada a Grafos.",
+        "b": "Arquitetura NoSQL Orientada a Colunas.",
+        "c": "Arquitetura Relacional com múltiplas tabelas de junção (Join Tables).",
+        "d": "Arquitetura de Flat Files (Arquivos Planos) indexados."
+      },
+      "correta": "a",
+      "justificativa": "A alternativa 'a' é a correta pois bancos de grafos são otimizados especificamente para percorrer relacionamentos complexos. A 'c' funcionaria, mas com performance degradada devido ao excesso de operações de JOIN. A 'b' e 'd' não são eficientes para análise de conexões entre entidades."
+    }
+  }
+],
+"Distinguir tipos de banco de dados de acordo com aplicação.": 
+
+[
+    {
+
+    "capacidade": "Aplicar comandos SQL para manipulação de dados em bancos de dados relacionais.",
+
+    "verbo": "Aplicar",
+
+    "nivel_bloom": "Aplicar",
+
+    "distratores_dificeis": true,
+
+    "exemplo": {
+
+      "contexto": "Em uma indústria de tecnologia da informação na área de desenvolvimento de sistemas, um técnico precisa atualizar o status de disponibilidade de um equipamento no banco de dados de inventário.",
+
+      "enunciado": "Qual comando SQL deve ser utilizado para alterar o campo 'status' para 'Manutenção' do equipamento com código 'MAQ-001'?",
+
+      "alternativas": {
+
+        "a": "UPDATE inventario SET status = 'Manutenção' WHERE codigo = 'MAQ-001';",
+
+        "b": "UPDATE inventario SET status = 'Manutenção' WHERE status = 'MAQ-001';",
+
+        "c": "UPDATE inventario WHERE codigo = 'MAQ-001' SET status = 'Manutenção';",
+
+        "d": "UPDATE inventario SET 'Manutenção' = status WHERE codigo = 'MAQ-001';"
+
+      },
+
+      "correta": "a",
+
+      "justificativa": "A alternativa 'a' é a correta pois segue a sintaxe padrão do comando UPDATE (SET campo = valor WHERE condição). A 'b' erra o filtro da cláusula WHERE. A 'c' inverte a ordem das cláusulas SET e WHERE. A 'd' inverte a atribuição do valor ao campo."
+
+    }
+
+  },
+  {
+    "capacidade": "Aplicar comandos SQL para manipulação de dados em bancos de dados relacionais.",
+    "verbo": "Aplicar",
+    "nivel_bloom": "Aplicar",
+    "distratores_dificeis": true,
+    "exemplo": {
+      "contexto": "Em uma indústria farmacêutica na área de controle de produção, um técnico precisa registrar um novo lote de medicamentos que acaba de ser fabricado no sistema de gestão de estoque.",
+      "enunciado": "Qual comando SQL realiza a inserção do lote 'L-99' com a quantidade '500' na tabela 'lotes'?",
+      "alternativas": {
+        "a": "INSERT INTO lotes (codigo, quantidade) VALUES ('L-99', 500);",
+        "b": "ADD INTO lotes SET codigo = 'L-99', quantidade = 500;",
+        "c": "INSERT lotes (codigo, quantidade) VALUES ('L-99', 500);",
+        "d": "INSERT INTO lotes (codigo, quantidade) SET ('L-99', 500);"
+      },
+      "correta": "a",
+      "justificativa": "A alternativa 'a' segue a sintaxe padrão do comando INSERT INTO. A 'b' utiliza o termo 'ADD' incorretamente para DML. A 'c' omite a palavra reservada 'INTO'. A 'd' mistura a sintaxe do INSERT com a cláusula SET, que pertence ao UPDATE."
+    }
+  },
+  {
+    "capacidade": "Aplicar comandos SQL para manipulação de dados em bancos de dados relacionais.",
+    "verbo": "Aplicar",
+    "nivel_bloom": "Aplicar",
+    "distratores_dificeis": true,
+    "exemplo": {
+      "contexto": "Em uma indústria logística na área de expedição, um técnico deve remover do banco de dados os registros de produtos que foram extraviados e não podem mais ser comercializados, utilizando o código de rastreio 'EXT-404'.",
+      "enunciado": "Qual comando SQL executa a exclusão definitiva deste registro específico na tabela 'produtos'?",
+      "alternativas": {
+        "a": "DELETE FROM produtos WHERE rastreio = 'EXT-404';",
+        "b": "REMOVE FROM produtos WHERE rastreio = 'EXT-404';",
+        "c": "DELETE produtos WHERE rastreio = 'EXT-404';",
+        "d": "DROP FROM produtos WHERE rastreio = 'EXT-404';"
+      },
+      "correta": "a",
+      "justificativa": "A alternativa 'a' está correta pois o comando DELETE FROM apaga linhas de uma tabela com base em uma condição. A 'b' utiliza 'REMOVE', que não é um comando padrão SQL. A 'c' omite a cláusula 'FROM'. A 'd' utiliza 'DROP', que é um comando DDL para excluir a estrutura da tabela inteira, não apenas dados específicos."
+    }
+  },
+  {
+    "capacidade": "Aplicar comandos SQL para manipulação de dados em bancos de dados relacionais.",
+    "verbo": "Analisar",
+    "nivel_bloom": "Analisar",
+    "distratores_dificeis": true,
+    "exemplo": {
+      "contexto": "Em uma indústria automotiva na área de manutenção, um técnico executou um comando para atualizar o preço de uma peça específica, mas percebeu que todos os 5.000 itens da tabela 'pecas' tiveram seus valores alterados simultaneamente.",
+      "enunciado": "Qual falha na construção do comando SQL causou este incidente no banco de dados?",
+      "alternativas": {
+        "a": "Ausência da cláusula WHERE para filtrar o registro específico.",
+        "b": "Uso incorreto da cláusula SET antes do nome da coluna.",
+        "c": "Incompatibilidade de tipos de dados entre o valor e a coluna.",
+        "d": "Violação de uma chave estrangeira durante a atualização."
+      },
+      "correta": "a",
+      "justificativa": "A alternativa 'a' é o gabarito pois, no comando UPDATE, a falta da cláusula WHERE faz com que a alteração seja aplicada a todas as linhas da tabela. As alternativas 'b', 'c' e 'd' resultariam em erros de execução (syntax ou constraint) e não na alteração global dos dados."
+    }
+  },
+  {
+    "capacidade": "Aplicar comandos SQL para manipulação de dados em bancos de dados relacionais.",
+    "verbo": "Analisar",
+    "nivel_bloom": "Analisar",
+    "distratores_dificeis": true,
+    "exemplo": {
+      "contexto": "Em uma indústria têxtil na área de TI, ao tentar excluir um registro de 'categoria' de tecidos, o banco de dados retornou um erro de 'Integridade Referencial', impedindo a conclusão da operação.",
+      "enunciado": "Qual o motivo técnico que impede a exclusão deste dado no modelo relacional?",
+      "alternativas": {
+        "a": "Existem registros em outras tabelas que dependem desta categoria como chave estrangeira.",
+        "b": "O comando DELETE não possui permissão de administrador no banco de dados.",
+        "c": "A categoria em questão está definida como Chave Primária (Primary Key) da tabela.",
+        "d": "O registro possui um índice ativado que bloqueia a manipulação de dados DML."
+      },
+      "correta": "a",
+      "justificativa": "A alternativa 'a' identifica corretamente o conceito de integridade referencial, onde o banco impede a exclusão de um registro 'pai' se houver registros 'filhos' vinculados. A 'b' e 'd' referem-se a permissões e performance. A 'c' não impede a exclusão por si só, desde que não haja dependências."
+    }
+  },
+  {
+    "capacidade": "Aplicar comandos SQL para manipulação de dados em bancos de dados relacionais.",
+    "verbo": "Analisar",
+    "nivel_bloom": "Analisar",
+    "distratores_dificeis": true,
+    "exemplo": {
+      "contexto": "Em uma indústria de alimentos na área de qualidade, um técnico tentou inserir uma nova medição de temperatura, mas recebeu a mensagem: 'Cannot insert NULL into column (id_sensor)'.",
+      "enunciado": "Ao analisar a estrutura da tabela, qual configuração da coluna justifica a interrupção do comando?",
+      "alternativas": {
+        "a": "A coluna possui a restrição NOT NULL ativada.",
+        "b": "A coluna está configurada com a propriedade AUTO_INCREMENT.",
+        "c": "A coluna possui um valor padrão (DEFAULT) já definido.",
+        "d": "A coluna foi definida como uma chave estrangeira (FOREIGN KEY)."
+      },
+      "correta": "a",
+      "justificativa": "A alternativa 'a' é a correta pois a restrição NOT NULL obriga o preenchimento da coluna. Se fosse 'b', o sistema geraria o ID sozinho. Se fosse 'c', ele usaria o valor padrão em vez de dar erro. Se fosse 'd', o erro seria de violação de chave, não de valor nulo."
+    }
+  }
+],
+"Aplicar técnicas para modelagem do banco de dados, de acordo com sua estrutura": [
+  {
+    "capacidade": "Aplicar técnicas para modelagem do banco de dados, de acordo com sua estrutura.",
+    "verbo": "Aplicar",
+    "nivel_bloom": "Aplicar",
+    "distratores_dificeis": true,
+    "exemplo": {
+      "contexto": "Em uma indústria de manufatura na área de engenharia de produto, um técnico está desenhando o banco de dados para controlar a relação entre as 'Peças' fabricadas e seus respectivos 'Fornecedores'. No cenário real da fábrica, uma peça pode ser entregue por vários fornecedores e um fornecedor pode fabricar diversas peças diferentes.",
+      "enunciado": "Qual técnica de modelagem lógica deve ser aplicada para estruturar corretamente essa cardinalidade de muitos-para-muitos (N:N) no banco de dados relacional?",
+      "alternativas": {
+        "a": "Criação de uma tabela associativa (tabela de junção) contendo as chaves estrangeiras (Foreign Keys) de Peças e de Fornecedores.",
+        "b": "Inserção da chave primária da tabela Fornecedores como chave estrangeira diretamente na tabela de Peças.",
+        "c": "Criação de uma coluna do tipo matriz (array) na tabela de Peças para armazenar os múltiplos códigos dos fornecedores.",
+        "d": "Mesclagem das entidades em uma única tabela que contenha tanto os atributos da peça quanto os do fornecedor."
+      },
+      "correta": "a",
+      "justificativa": "A alternativa 'a' é a correta, pois na modelagem relacional, relações N:N só são resolvidas com a criação de uma terceira entidade (tabela associativa). A 'b' atenderia apenas uma relação 1:N. A 'c' viola a Primeira Forma Normal (1FN) ao criar atributos multivalorados. A 'd' geraria severas anomalias de redundância, atualização e exclusão."
+    }
+  },
+  {
+    "capacidade": "Aplicar técnicas para modelagem do banco de dados, de acordo com sua estrutura.",
+    "verbo": "Aplicar",
+    "nivel_bloom": "Aplicar",
+    "distratores_dificeis": true,
+    "exemplo": {
+      "contexto": "Em uma indústria química na área de laboratório, o técnico está projetando a tabela de 'Laudos_Quimicos'. Ele nota que as colunas 'Nome_Laboratorio' e 'Telefone_Laboratorio' estão dependendo diretamente do 'ID_Laboratorio', que não é a chave primária da tabela de laudos.",
+      "enunciado": "Qual regra de normalização deve ser aplicada para separar os dados do laboratório em uma tabela independente e evitar anomalias de atualização?",
+      "alternativas": {
+        "a": "Terceira Forma Normal (3FN), que elimina as dependências transitivas entre atributos não-chave.",
+        "b": "Primeira Forma Normal (1FN), que garante a atomicidade eliminando atributos multivalorados e compostos.",
+        "c": "Segunda Forma Normal (2FN), que remove dependências parciais quando a chave primária é composta.",
+        "d": "Quarta Forma Normal (4FN), que trata dependências multivaloradas complexas e independentes."
+      },
+      "correta": "a",
+      "justificativa": "A alternativa 'a' é a correta, pois o problema descrito (um campo não-chave dependendo de outro campo não-chave) caracteriza uma dependência transitiva, resolvida na 3FN. A 'b' (1FN) lida com campos com múltiplos valores. A 'c' (2FN) lida com chaves primárias compostas, o que não foi mencionado no contexto. A 'd' é uma forma normal avançada que não se aplica ao caso básico de separação de entidades."
+    }
+  },
+  {
+    "capacidade": "Aplicar técnicas para modelagem do banco de dados, de acordo com sua estrutura.",
+    "verbo": "Analisar",
+    "nivel_bloom": "Analisar",
+    "distratores_dificeis": true,
+    "exemplo": {
+      "contexto": "Em uma indústria de bebidas na área de logística, o sistema de banco de dados começou a permitir que uma mesma Nota Fiscal fosse vinculada simultaneamente a dois Caminhões de entrega diferentes, o que é um erro logístico grave. A regra de negócio exige que uma Nota Fiscal pertença a um único caminhão.",
+      "enunciado": "Ao inspecionar o modelo lógico e físico do banco de dados, qual falha estrutural justifica esse comportamento inesperado do sistema?",
+      "alternativas": {
+        "a": "A implementação indevida de uma tabela associativa (N:N) entre 'Caminhão' e 'Nota_Fiscal'.",
+        "b": "O posicionamento da chave estrangeira (ID_Caminhao) diretamente dentro da tabela 'Nota_Fiscal'.",
+        "c": "A ausência de uma restrição de verificação (CHECK Constraint) na data de emissão da nota.",
+        "d": "A falta de uma chave primária (Primary Key) estruturada na tabela 'Caminhão'."
+      },
+      "correta": "a",
+      "justificativa": "A alternativa 'a' diagnostica o erro corretamente: uma tabela associativa permite relações muitos-para-muitos, ocasionando o vínculo de múltiplos caminhões à mesma nota. A 'b' seria o modelo correto (1:N) e não causaria o defeito. A 'c' e a 'd' são problemas estruturais, mas não explicam o vínculo múltiplo (cardinalidade) entre as duas entidades."
+    }
+  },
+  {
+    "capacidade": "Aplicar técnicas para modelagem do banco de dados, de acordo com sua estrutura.",
+    "verbo": "Diferenciar",
+    "nivel_bloom": "Analisar",
+    "distratores_dificeis": true,
+    "exemplo": {
+      "contexto": "Em uma indústria de papel e celulose na área de engenharia de manutenção, o técnico possui um modelo conceitual com uma entidade genérica 'Equipamento' e duas subentidades: 'Motor_Eletrico' e 'Bomba_Hidraulica'. Ele precisa transformar isso em tabelas físicas otimizando o banco para buscas exclusivas e constantes de motores.",
+      "enunciado": "Qual estratégia de mapeamento para o banco de dados físico deve ser adotada para otimizar essas consultas específicas, evitando tabelas com excesso de campos nulos?",
+      "alternativas": {
+        "a": "Criar tabelas separadas para as subclasses (Motor e Bomba) ligadas por chave estrangeira à tabela mãe Equipamento (Table-Per-Type).",
+        "b": "Agrupar todos os atributos das três entidades em uma única tabela 'Equipamento' (Single Table), usando NULL para campos não aplicáveis.",
+        "c": "Eliminar a tabela genérica 'Equipamento' e criar apenas as tabelas filhas, duplicando os atributos genéricos em ambas (Concrete Table).",
+        "d": "Armazenar os equipamentos em uma única tabela contendo apenas as chaves, guardando os demais dados em um arquivo de texto externo."
+      },
+      "correta": "a",
+      "justificativa": "A alternativa 'a' é a correta, pois a modelagem Table-Per-Type mantém a integridade relacional, economiza espaço (sem colunas NULL) e otimiza buscas específicas, pois a tabela de 'Motor' terá apenas dados de motor. A 'b' (Single Table) geraria tabelas muito largas e com alto índice de campos vazios (NULL). A 'c' dificultaria consultas polimórficas (ex: buscar todos os equipamentos em manutenção). A 'd' fere os princípios de armazenamento relacional estruturado."
+    }
+  },
+  {
+    "capacidade": "Aplicar técnicas para modelagem do banco de dados, de acordo com sua estrutura.",
+    "verbo": "Inspecionar",
+    "nivel_bloom": "Analisar",
+    "distratores_dificeis": true,
+    "exemplo": {
+      "contexto": "Em uma indústria siderúrgica na área de automação, o banco de dados relacional armazena milhões de registros de temperaturas enviados pelos sensores dos fornos. O técnico percebe que o banco consome 100% da CPU ao buscar o histórico de um forno específico em uma data determinada (cláusula WHERE).",
+      "enunciado": "Ao inspecionar a estrutura física da tabela, qual omissão nas técnicas de modelagem de performance explica essa sobrecarga no servidor?",
+      "alternativas": {
+        "a": "A ausência de Índices (Indexes) nas colunas utilizadas frequentemente para filtro, como ID_Forno e Data_Leitura.",
+        "b": "A falta de chaves estrangeiras (Foreign Keys) conectando a tabela de leituras com a tabela de fornos.",
+        "c": "A não aplicação da regra de integridade de domínio (Domain Integrity) na coluna de temperatura.",
+        "d": "O uso de tipos de dados de tamanho variável (VARCHAR) para armazenar os valores numéricos inteiros."
+      },
+      "correta": "a",
+      "justificativa": "A alternativa 'a' é o gabarito. Sem índices, o SGBD é forçado a realizar um 'Table Scan' (varredura completa linha a linha) em milhões de registros para encontrar a condição do WHERE, gerando pico de CPU. A 'b' (chaves estrangeiras) serve para integridade, mas não acelera a busca. A 'c' evita dados inválidos, mas não resolve performance. A 'd' é uma má prática de tipagem, mas o principal responsável pelo colapso de performance em buscas massivas não indexadas é a falta de índices estruturais."
+    }
+  }
+],
+
+"Aplicar procedimentos de segurança e backup no SGBD": [
+  {
+    "capacidade": "Aplicar procedimentos de segurança e backup no SGBD.",
+    "verbo": "Aplicar",
+    "nivel_bloom": "Aplicar",
+    "distratores_dificeis": true,
+    "exemplo": {
+      "contexto": "Em uma indústria de tecnologia financeira na área de infraestrutura de dados, um técnico precisa configurar o plano de recuperação de desastres do SGBD principal. A diretriz de TI exige que o backup diário armazene apenas as alterações realizadas desde o último backup completo (Full) feito no domingo, pois essa estratégia agiliza o tempo de restauração em caso de pane, exigindo a restauração de apenas dois arquivos.",
+      "enunciado": "Qual técnica de backup o técnico deve configurar para atender especificamente a essa diretriz corporativa?",
+      "alternativas": {
+        "a": "Backup Diferencial.",
+        "b": "Backup Incremental.",
+        "c": "Backup Completo (Full) Diário.",
+        "d": "Backup de Espelhamento (Mirroring)."
+      },
+      "correta": "a",
+      "justificativa": "A alternativa 'a' é a correta, pois o Backup Diferencial copia todas as alterações feitas desde o último backup Completo (Full), permitindo uma restauração rápida (Full + Último Diferencial). A alternativa 'b' (Incremental) exigiria a restauração do Full e de todos os incrementais subsequentes em ordem. A 'c' desrespeita a regra de copiar 'apenas as alterações'. A 'd' é uma técnica de alta disponibilidade, não um formato de arquivo de backup para recuperação de desastre."
+    }
+  },
+  {
+    "capacidade": "Aplicar procedimentos de segurança e backup no SGBD.",
+    "verbo": "Aplicar",
+    "nivel_bloom": "Aplicar",
+    "distratores_dificeis": true,
+    "exemplo": {
+      "contexto": "Em uma indústria de manufatura na área de recursos humanos, um técnico de banco de dados recebe a notificação formal de que um analista financeiro foi desligado da empresa. É necessário bloquear imediatamente o acesso desse ex-colaborador, garantindo que ele não possa mais consultar ou alterar dados na tabela 'folha_pagamento'.",
+      "enunciado": "Qual comando DCL (Data Control Language) o técnico deve executar para remover os privilégios concedidos ao usuário 'analista_fin'?",
+      "alternativas": {
+        "a": "REVOKE ALL PRIVILEGES ON folha_pagamento FROM analista_fin;",
+        "b": "DROP USER analista_fin FROM folha_pagamento;",
+        "c": "DELETE GRANTS ON folha_pagamento FOR analista_fin;",
+        "d": "DENY SELECT, UPDATE ON folha_pagamento TO analista_fin;"
+      },
+      "correta": "a",
+      "justificativa": "A alternativa 'a' é a correta, utilizando o comando padrão SQL (REVOKE) para revogar privilégios de acesso a um objeto. A 'b' mistura o comando de exclusão de usuário (DDL) com a sintaxe de tabela. A 'c' inventa uma sintaxe com 'DELETE GRANTS', que não é um comando DCL válido. A 'd' utiliza 'DENY', que embora exista em alguns SGBDs específicos (como SQL Server) para sobrepor permissões, não é o comando universal padrão para 'remover' uma concessão prévia como o REVOKE."
+    }
+  },
+  {
+    "capacidade": "Aplicar procedimentos de segurança e backup no SGBD.",
+    "verbo": "Analisar",
+    "nivel_bloom": "Analisar",
+    "distratores_dificeis": true,
+    "exemplo": {
+      "contexto": "Em uma indústria farmacêutica na área de pesquisa e desenvolvimento, um técnico inspeciona os logs de segurança do SGBD e identifica que um estagiário conseguiu excluir registros da tabela 'formulas_quimicas'. O técnico verifica que o usuário do estagiário pertence a um grupo (Role) configurado estritamente com permissões de 'SELECT'.",
+      "enunciado": "Ao analisar a hierarquia de controle de acesso, qual falha de configuração de segurança justifica essa violação de privilégios no banco de dados?",
+      "alternativas": {
+        "a": "O usuário recebeu privilégios explícitos de 'DELETE' diretamente em sua conta, sobrepondo as restrições da Role.",
+        "b": "A tabela 'formulas_quimicas' foi modelada sem a definição de uma Chave Primária (Primary Key).",
+        "c": "O log de transações do SGBD falhou ao registrar o bloqueio de concorrência antes da instrução DML.",
+        "d": "A permissão de 'SELECT' foi concedida utilizando a cláusula WITH GRANT OPTION em nível de servidor."
+      },
+      "correta": "a",
+      "justificativa": "A alternativa 'a' diagnostica a falha corretamente: na maioria dos SGBDs, as permissões são cumulativas. Se um usuário tem apenas leitura por um grupo (Role), mas recebe uma permissão de exclusão (DELETE) direta, a permissão direta prevalece. A 'b' afeta a modelagem, não a segurança. A 'c' envolve propriedades ACID, não controle de acesso. A 'd' permitiria que ele repassasse a permissão de leitura a outros, mas não concederia a ele o poder de exclusão."
+    }
+  },
+  {
+    "capacidade": "Aplicar procedimentos de segurança e backup no SGBD.",
+    "verbo": "Inspecionar",
+    "nivel_bloom": "Analisar",
+    "distratores_dificeis": true,
+    "exemplo": {
+      "contexto": "Em uma indústria de comércio eletrônico na área de infraestrutura, o servidor principal sofreu corrupção física às 14h00. O técnico inicia o plano de Restore point-in-time utilizando o backup Full da madrugada e a sequência de backups de Log de Transações (gerados a cada hora). O processo restaura o Full e os logs das 08h e 09h com sucesso, mas aborta com erro fatal ao tentar aplicar o arquivo de log das 10h.",
+      "enunciado": "Ao inspecionar as mensagens do SGBD, qual anomalia técnica explica a interrupção do processo de restauração?",
+      "alternativas": {
+        "a": "A quebra da cadeia de logs (Log Chain) devido a um backup de log ausente, corrompido ou à realização de um backup truncado indevidamente.",
+        "b": "A tentativa de restaurar os arquivos de log sobre um banco de dados que foi deixado no estado de recuperação completo (RECOVERY).",
+        "c": "O esgotamento do limite de espaço físico no disco rígido que armazena os arquivos de log do SGBD.",
+        "d": "A ausência de um backup Diferencial no meio da sequência de arquivos do log de transações."
+      },
+      "correta": "a",
+      "justificativa": "A alternativa 'a' é o gabarito, pois o Restore point-in-time exige uma sequência contínua (Log Sequence Number - LSN). Se o log das 10h estiver corrompido ou houver uma quebra na cadeia, os logs subsequentes não podem ser aplicados. A 'b' resultaria em erro imediato logo no backup Full (não aceitaria os logs das 08h e 09h). A 'c' é um erro de infraestrutura geral. A 'd' é falsa, pois um restore de log não exige obrigatoriamente um Diferencial, apenas o Full e a cadeia contínua de logs."
+    }
+  },
+  {
+    "capacidade": "Aplicar procedimentos de segurança e backup no SGBD.",
+    "verbo": "Diagnosticar",
+    "nivel_bloom": "Analisar",
+    "distratores_dificeis": true,
+    "exemplo": {
+      "contexto": "Em uma indústria automotiva na área de vendas corporativas, a diretoria detecta uma alteração não autorizada no percentual de desconto de uma tabela crítica. O técnico acessa o SGBD para investigar, mas constata que o sistema armazena apenas o valor atualizado e o horário da última modificação, impossibilitando identificar quem executou o comando UPDATE.",
+      "enunciado": "Qual técnica de segurança e monitoramento o técnico deve diagnosticar como ausente na modelagem física desta tabela?",
+      "alternativas": {
+        "a": "Implementação de gatilhos (Triggers) de auditoria ou ativação do recurso nativo de Database Auditing.",
+        "b": "Configuração do algoritmo de criptografia de dados em repouso (Transparent Data Encryption - TDE).",
+        "c": "Aplicação de mascaramento dinâmico de dados (Dynamic Data Masking) nas colunas de valores financeiros.",
+        "d": "Ativação do recurso de controle de concorrência com bloqueio exclusivo de registros (Exclusive Row Lock)."
+      },
+      "correta": "a",
+      "justificativa": "A alternativa 'a' é a correta. Triggers de auditoria ou o Database Auditing são os recursos que gravam metadados cruciais de segurança: quem (usuário), quando, o que era e o que ficou. A 'b' protege os arquivos do banco contra roubos físicos do disco, não contra DMLs internos. A 'c' apenas oculta os dados visuais na tela para usuários não autorizados. A 'd' serve para evitar conflitos de gravação simultânea, não para rastrear a autoria de alterações."
+    }
+  }
+], 
+"Instalar sistema de gerenciamento de banco de dados (SGBD) conforme especificações para funcionamento do banco de dados": [
+  {
+    "capacidade": "Instalar sistema de gerenciamento de banco de dados (SGBD) conforme especificações para funcionamento do banco de dados.",
+    "verbo": "Instalar",
+    "nivel_bloom": "Aplicar",
+    "distratores_dificeis": true,
+    "exemplo": {
+      "contexto": "Em uma indústria de varejo na área de infraestrutura de TI, um técnico realiza a instalação de um novo SGBD em um servidor Linux. A documentação do sistema de vendas exige que o banco de dados suporte nativamente a gravação e leitura de caracteres especiais do idioma português (como ç, ã, é).",
+      "enunciado": "Qual parâmetro de configuração deve ser definido durante a etapa de instalação e criação da instância do SGBD para garantir o armazenamento correto desses caracteres?",
+      "alternativas": {
+        "a": "Character Set e Collation (ex: UTF-8 ou Latin1).",
+        "b": "Authentication Method e Master Password.",
+        "c": "Max Connections e Buffer Pool Size.",
+        "d": "Port Number e Network Protocol."
+      },
+      "correta": "a",
+      "justificativa": "A alternativa 'a' é a correta, pois Character Set (conjunto de caracteres) e Collation (regras de agrupamento e comparação) definem como o SGBD vai codificar e armazenar as letras e símbolos. A 'b' trata de segurança. A 'c' trata de performance e memória. A 'd' trata de comunicação de rede."
+    }
+  },
+  {
+    "capacidade": "Instalar sistema de gerenciamento de banco de dados (SGBD) conforme especificações para funcionamento do banco de dados.",
+    "verbo": "Configurar",
+    "nivel_bloom": "Aplicar",
+    "distratores_dificeis": true,
+    "exemplo": {
+      "contexto": "Em uma indústria de telecomunicações na área de operações de dados, o arquiteto de sistemas especificou que a instalação do SGBD deve garantir a máxima performance de leitura e escrita (I/O) no disco, além de proteção contra falhas de hardware.",
+      "enunciado": "Qual procedimento técnico deve ser aplicado nos caminhos de diretório (paths) durante o assistente de instalação para atender a essa especificação de arquitetura física?",
+      "alternativas": {
+        "a": "Direcionar os diretórios de dados (Data Files) e os diretórios de log de transação (Transaction Logs) para volumes de discos físicos distintos.",
+        "b": "Instalar todos os arquivos binários do SGBD, arquivos de dados e logs em um único disco de estado sólido (SSD) particionado.",
+        "c": "Habilitar a compactação de dados diretamente na pasta raiz de instalação do software do SGBD no sistema operacional.",
+        "d": "Desativar a criação do diretório de log de transações para economizar espaço físico de armazenamento no servidor principal."
+      },
+      "correta": "a",
+      "justificativa": "A alternativa 'a' é a correta. Separar os dados dos logs em discos físicos diferentes evita gargalos de I/O (pois as operações de leitura/escrita não competem pelo mesmo disco) e melhora a segurança em caso de quebra de um dos discos. A 'b' cria um ponto único de falha e gargalo de I/O. A 'c' degrada a performance consumindo CPU. A 'd' elimina a capacidade de recuperação (ACID) do banco."
+    }
+  },
+  {
+    "capacidade": "Instalar sistema de gerenciamento de banco de dados (SGBD) conforme especificações para funcionamento do banco de dados.",
+    "verbo": "Analisar",
+    "nivel_bloom": "Analisar",
+    "distratores_dificeis": true,
+    "exemplo": {
+      "contexto": "Em uma indústria de alimentos na área de automação, o técnico concluiu a instalação padrão de um SGBD. Ele consegue conectar-se perfeitamente ao banco utilizando a linha de comando no próprio servidor. Porém, o servidor de aplicação (que está em outra máquina na mesma rede) recebe a mensagem 'Connection Refused' ao tentar o acesso.",
+      "enunciado": "Ao analisar os arquivos de configuração pós-instalação, qual restrição nativa de rede do SGBD justifica essa falha de conexão externa?",
+      "alternativas": {
+        "a": "O parâmetro de escuta de rede (bind-address ou listen_addresses) está configurado para aceitar apenas conexões da interface local (localhost / 127.0.0.1).",
+        "b": "O serviço do SGBD não foi iniciado no gerenciador de serviços do sistema operacional, mantendo a porta TCP fechada.",
+        "c": "O banco de dados foi inicializado sem a criação prévia de tabelas, o que impede a autenticação de clientes remotos.",
+        "d": "O firewall do sistema operacional bloqueou automaticamente a porta de saída (Outbound) do servidor de aplicação."
+      },
+      "correta": "a",
+      "justificativa": "A alternativa 'a' identifica o comportamento padrão de segurança na instalação da maioria dos SGBDs (como MySQL ou PostgreSQL), que escutam apenas localhost até que sejam explicitamente configurados para escutar IPs da rede. A 'b' é incorreta porque o técnico consegue conectar localmente (o serviço está rodando). A 'c' não tem relação com recusa de conexão TCP. A 'd' é uma questão de rede do cliente, mas o erro de bind-address no servidor é a causa primária e padrão de 'Connection Refused' pós-instalação."
+    }
+  },
+  {
+    "capacidade": "Instalar sistema de gerenciamento de banco de dados (SGBD) conforme especificações para funcionamento do banco de dados.",
+    "verbo": "Inspecionar",
+    "nivel_bloom": "Analisar",
+    "distratores_dificeis": true,
+    "exemplo": {
+      "contexto": "Em uma indústria automotiva na área de engenharia de produção, após a instalação de uma nova instância do SGBD em um servidor Linux com 16GB de RAM, o serviço do banco de dados é subitamente encerrado (Killed) pelo sistema operacional (OOM Killer) sempre que o turno atinge o pico de uso.",
+      "enunciado": "Ao inspecionar os parâmetros do arquivo de configuração do SGBD definidos durante a instalação, qual falha de dimensionamento provoca a interrupção do serviço pelo sistema operacional?",
+      "alternativas": {
+        "a": "A configuração do limite de memória global alocada para o SGBD (ex: Buffer Pool / Shared Buffers) ultrapassou a capacidade de memória RAM física disponível.",
+        "b": "A definição do número máximo de conexões simultâneas foi configurada com um valor de segurança muito baixo (ex: max_connections = 50).",
+        "c": "O arquivo de paginação (Swap) foi desativado no sistema operacional pelo instalador automático do banco de dados.",
+        "d": "O tempo de expiração do tempo limite de consulta (Statement Timeout) foi configurado para abortar querys após 30 segundos."
+      },
+      "correta": "a",
+      "justificativa": "A alternativa 'a' é a correta. Se os parâmetros de alocação de memória do SGBD (que são definidos na instalação e configuração inicial) permitirem que ele exija mais RAM do que o servidor possui, o kernel do Linux aciona o OOM Killer (Out Of Memory) para matar o processo do SGBD e proteger o sistema operacional. As alternativas 'b' e 'd' causariam recusa de novas conexões ou erros para a aplicação, mas não derrubariam o serviço inteiro. A 'c' agravaria a falta de memória, mas a causa raiz do SGBD cair é a má configuração do Buffer."
+    }
+  },
+  {
+    "capacidade": "Instalar sistema de gerenciamento de banco de dados (SGBD) conforme especificações para funcionamento do banco de dados.",
+    "verbo": "Diagnosticar",
+    "nivel_bloom": "Analisar",
+    "distratores_dificeis": true,
+    "exemplo": {
+      "contexto": "Em uma indústria farmacêutica na área de ciência de dados, um técnico tenta executar um script de instalação silenciosa (Unattended Installation) do SGBD corporativo. Imediatamente após a execução, o instalador é abortado exibindo o erro fatal 'Missing OS Prerequisites'.",
+      "enunciado": "Ao diagnosticar as condições do servidor antes da instalação do SGBD, qual exigência de infraestrutura está pendente no sistema operacional?",
+      "alternativas": {
+        "a": "A ausência de bibliotecas de dependência de software necessárias para a compilação ou execução dos binários (como libaio ou C++ Redistributable).",
+        "b": "A falta de privilégios de execução no arquivo de configuração de backup e plano de manutenção do SGBD.",
+        "c": "A inexistência de um banco de dados temporário (TempDB) previamente criado no gerenciador de discos do servidor.",
+        "d": "A desativação do protocolo de resolução de nomes (DNS) na interface de rede loopback do sistema operacional."
+      },
+      "correta": "a",
+      "justificativa": "A alternativa 'a' descreve o principal motivo de falha por 'pré-requisitos' em instalações de SGBD (seja Oracle, MySQL, SQL Server): o SO precisa ter certas bibliotecas instaladas para que o motor do banco possa rodar. A 'b' e 'c' são elementos que só existem APÓS o SGBD ser instalado com sucesso. A 'd' não impede o motor de instalação de iniciar, apenas dificultaria configurações de rede posteriores."
+    }
+  }
+]
+
+        }
+    },
+    {
+        "UC": "",
+        "QUESTOES": {
+            
+        }
+    }
+]
