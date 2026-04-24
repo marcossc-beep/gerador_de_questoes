@@ -9,7 +9,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+const groq = new Groq({ apiKey: process.env.groq_api_key });
 
 // Função para ler os exemplos do arquivo JSON
 function carregarExemplos() {
