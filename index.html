@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>MSEP SC - Gerador Profissional</title>
+    <style>
+        :root { --senai-blue: #005594; --senai-red: #d93025; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f4f7f9; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        .container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 100%; max-width: 750px; }
+        h2 { color: var(--senai-blue); margin-top: 0; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        label { font-weight: bold; display: block; margin-top: 15px; color: #444; font-size: 0.9em; }
+        textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; margin-top: 5px; box-sizing: border-box; font-family: inherit; }
+        #cap { height: 60px; }
+        #ctxAulas { height: 100px; background: #fffdf0; border-color: #ffe082; }
+        .row { display: flex; gap: 20px; align-items: center; margin-top: 15px; flex-wrap: wrap; }
+        input[type="number"] { width: 60px; padding: 8px; border-radius: 6px; border: 1px solid #ccc; }
+        .toggle-container { display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.85em; font-weight: bold; }
+        .btn-gerar { background: var(--senai-blue); color: white; border: none; padding: 15px 30px; border-radius: 6px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 20px; font-size: 16px; transition: 0.2s; }
+        .btn-gerar:hover { background: #003d6b; }
+        .btn-gerar:disabled { background: #ccc; }
+        .card { background: white; padding: 25px; border-radius: 8px; margin-top: 20px; border-left: 10px solid var(--senai-blue); box-shadow: 0 4px 10px rgba(0,0,0,0.05); width: 100%; max-width: 750px; box-sizing: border-box; }
+        .badge { background: #eef6fb; color: var(--senai-blue); padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: bold; text-transform: uppercase; margin-right: 5px; }
+        .alt { padding: 12px; background: #f9f9f9; border-radius: 4px; margin: 8px 0; border: 1px solid #eee; font-size: 0.95em; }
+        .correta { background: #e8f5e9; border-color: #2e7d32; font-weight: bold; }
+        .status { margin-top: 15px; font-weight: bold; color: var(--senai-blue); text-align: center; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Gerador de Avaliação MSEP SC</h2>
+        
+        <label>Capacidade (Plano de Curso):</label>
+        <textarea id="cap" placeholder="Ex: Aplicar linguagem para consulta e manipulação de banco de dados."></textarea>
+
+        <label>Conteúdo trabalhado em Aula (Opcional):</label>
+        <textarea id="ctxAulas" placeholder="Ex: Trabalhamos especificamente com comandos de atualização de estoque em sistemas ERP usando sintaxe SQL Server..."></textarea>
+
+        <div class="row">
+            <div>
+                <label>Qtd Questões:</label>
+                <input type="number" id="qtd" value="1" min="1" max="5">
+            </div>
+            <div class="toggle-container" title="Força nível de Análise">
+                <input type="checkbox" id="hard"> <label for="hard">Questão Difícil</label>
+            </div>
+            <div class="toggle-container" title="Cria distratores muito parecidos com a resposta correta">
+                <input type="checkbox" id="dist"> <label for="dist">Distratores Difíceis</label>
+            </div>
+        </div>
+
+        <button id="btn" class="btn-gerar" onclick="gerar()">🚀 GERAR AVALIAÇÃO</button>
+        <div id="status" class="status"></div>
+    </div>
+
+    <div id="questoes-lista" style="width: 100%; max-width: 750px; margin-bottom: 50px;"></div>
+
+    <script>
+        async function gerar() {
+            const cap = document.getElementById('cap').value;
+            const ctxAulas = document.getElementById('ctxAulas').value;
+            const qtd = document.getElementById('qtd').value;
+            const hard = document.getElementById('hard').checked;
+            const dist = document.getElementById('dist').checked;
+            const btn = document.getElementById('btn');
+            const lista = document.getElementById('questoes-lista');
+            const status = document.getElementById('status');
+
+            if(!cap) return alert("Informe a capacidade!");
+
+            btn.disabled = true;
+            lista.innerHTML = "";
+            
+            for(let i=0; i<qtd; i++) {
+                status.innerText = `⏳ Gerando item ${i+1} de ${qtd}...`;
+                
+                try {
+                    const res = await fetch('http://localhost:3000/gerar-questao', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({ 
+                            capacidade: cap, 
+                            contextoAulas: ctxAulas,
+                            dificil: hard,
+                            distratoresDificeis: dist
+                        })
+                    });
+                    
+                    const q = await res.json();
+                    renderQuestao(q);
+
+                    if(i < qtd - 1) await new Promise(r => setTimeout(r, 2500));
+
+                } catch (err) {
+                    console.error(err);
+                    status.innerText = "❌ Erro na conexão com o servidor.";
+                }
+            }
+            status.innerText = "✅ Avaliação gerada com sucesso!";
+            btn.disabled = false;
+        }
+
+        function renderQuestao(q) {
+            const div = document.createElement('div');
+            div.className = 'card';
+            div.innerHTML = `
+                <div style="margin-bottom:15px">
+                    <span class="badge">Nível Bloom: ${q.nivel}</span>
+                    <span class="badge" style="background:#fff3e0; color:#ef6c00">Verbo: ${q.verbo_aplicado}</span>
+                </div>
+                <p><strong>Contexto Industrial:</strong><br>${q.contexto}</p>
+                <p><strong>Comando:</strong><br>${q.enunciado}</p>
+                <div class="alt ${q.correta == 'a' ? 'correta' : ''}">A) ${q.alternativas.a}</div>
+                <div class="alt ${q.correta == 'b' ? 'correta' : ''}">B) ${q.alternativas.b}</div>
+                <div class="alt ${q.correta == 'c' ? 'correta' : ''}">C) ${q.alternativas.c}</div>
+                <div class="alt ${q.correta == 'd' ? 'correta' : ''}">D) ${q.alternativas.d}</div>
+                <div style="margin-top:20px; padding:15px; background:#f0f4f8; border-radius:6px; font-size:0.85em;">
+                    <strong>Justificativa Pedagógica:</strong><br>${q.justificativa}
+                </div>
+            `;
+            document.getElementById('questoes-lista').appendChild(div);
+        }
+    </script>
+</body>
+</html>
