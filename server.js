@@ -9,6 +9,13 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+app.use(express.static(__dirname));
+
+// 2. Rota principal para servir o index.html
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
+
 const groq = new Groq({ apiKey: process.env.groq_api_key });
 
 // Função para ler os exemplos do arquivo JSON

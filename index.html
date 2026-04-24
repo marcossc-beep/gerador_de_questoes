@@ -56,6 +56,9 @@
     <div id="questoes-lista" style="width: 100%; max-width: 750px; margin-bottom: 50px;"></div>
 
     <script>
+const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    ? 'http://localhost:3000'
+    : 'https://gerador-de-questoes-qz15.onrender.com';
         async function gerar() {
             const cap = document.getElementById('cap').value;
             const ctxAulas = document.getElementById('ctxAulas').value;
@@ -75,7 +78,7 @@
                 status.innerText = `⏳ Gerando item ${i+1} de ${qtd}...`;
                 
                 try {
-                    const res = await fetch('http://localhost:3000/gerar-questao', {
+                    const res = await fetch(`${API_URL}/gerar-questao`, {
                         method: 'POST',
                         headers: {'Content-Type': 'application/json'},
                         body: JSON.stringify({ 
